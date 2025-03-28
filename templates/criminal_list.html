@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criminal List</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .container {
+      margin: 20px;
+    }
+
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .image-item {
+      position: relative;
+      width: 200px;
+      text-align: center;
+    }
+
+    .image-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .image-item img:hover {
+      transform: scale(1.1);
+    }
+
+    .info {
+      margin-top: 10px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    a {
+      color: blue; /* Text color */
+      text-decoration: none; /* Removes underline */
+      font-size: 25px; /* Font size */
+
+    }
+    
+    a:hover {
+        color: red; /* Change text color on hover */
+        text-decoration: underline; /* Underline text on hover */
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <a href="{{ url_for('index') }}">Home</a> <br>
+    <header>
+      <br>
+      <h1>Missing Persons List</h1>
+      <p>Collected images from the database</p>
+    </header>
+
+    <section class="image-grid">
+      {% for image in camera_captures + uploaded_files %}
+        <div class="image-item">
+          <img src="{{ url_for('send_image', filename=image) }}" alt="Criminal Image">
+          
+          {% set user_id = image.split('_')[0] %}
+          {% if user_id in criminal_info %}
+            <div class="info">
+              <p>Name: {{ criminal_info[user_id].name }}</p>
+              <p>Age: {{ criminal_info[user_id].crime }}</p>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </section>
+  </div>
+  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+</body>
+</html>

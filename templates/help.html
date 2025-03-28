@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Instructions - Missing Persons Identification System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .welcome {
+            font-size: 18px;
+            color: #333;
+        }
+        .logout-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 100;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        .nav-menu {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 99;
+            padding-top: 60px;
+        }
+        .nav-menu.active {
+            left: 0;
+        }
+        .nav-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .nav-menu a:hover {
+            background-color: #f0f0f0;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 98;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .help-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .help-section {
+            margin-bottom: 30px;
+        }
+        .help-section h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .help-section p {
+            line-height: 1.6;
+            color: #333;
+        }
+        .email-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .email-button:hover {
+            background-color: #218838;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #007bff;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .help-container {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div class="nav-menu">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('data_gather') }}">Data Gathering</a>
+        <a href="{{ url_for('criminal_list') }}">Criminal List</a>
+        <a href="{{ url_for('run_recognizer') }}">Start Recognizer</a>
+        <a href="{{ url_for('run_missing_person_detect') }}">Missing Person Detect</a>
+        <a href="{{ url_for('help') }}">Help & Instructions</a>
+    </div>
+    
+    <div class="overlay" onclick="toggleMenu()"></div>
+
+    <div class="header">
+        <div class="welcome">Welcome, {{ session.username }}!</div>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="help-container">
+        <h1>Help & Instructions</h1>
+        
+        <div class="help-section">
+            <h2>Getting Started</h2>
+            <p>Welcome to the Missing Persons Identification System. This guide will help you understand how to use the system effectively.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>Main Features</h2>
+            <div class="step">
+                <span class="step-number">1. Data Gathering:</span>
+                <p>Use this feature to add new missing person data to the system. Upload clear face images and provide relevant information.</p>
+            </div>
+            <div class="step">
+                <span class="step-number">2. Criminal List:</span>
+                <p>View and manage the database of known criminals. You can search, filter, and view detailed information about each entry.</p>
+            </div>
+            <div class="step">
+                <span class="step-number">3. Start Recognizer:</span>
+                <p>Upload an image to identify potential matches with known criminals in the database.</p>
+            </div>
+            <div class="step">
+                <span class="step-number">4. Missing Person Detect:</span>
+                <p>Use this feature to identify potential matches for missing persons using facial recognition technology.</p>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Best Practices</h2>
+            <ul>
+                <li>Ensure uploaded images are clear and well-lit</li>
+                <li>Regularly update the database with new information</li>
+                <li>Double-check results before taking any action</li>
+                <li>Keep the system updated with the latest security patches</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>Need Help?</h2>
+            <p>If you encounter any issues or need assistance, please contact our support team:</p>
+            <a href="mailto:kgsatheeshkumar@gmail.com?subject=Support%20Request%20-%20Criminal%20Identification%20System&body=Please%20describe%20your%20issue%20here..." class="email-button">Report an Issue</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
